@@ -3,18 +3,14 @@ import {Container, Post, Title} from './PostStyles';
 import {getPosts} from "../../helpers/apiCalls";
 import {CommentCreator} from "../CommentCreator/CommentCreator";
 import {Comments} from "../comments/Comments";
+import {IFullPost, IPost} from "../../../../typesInterfaces";
 
 interface IPosts {
 
 }
 
-interface IPost {
-    id: string;
-    title: string;
-}
-
 export const Posts: FC<IPosts> = () => {
-    const [posts, setPosts] = useState({});
+    const [posts, setPosts] = useState<{[id: string]: IFullPost}>({});
     useEffect(() => {
         getPostList();
 
@@ -31,7 +27,7 @@ export const Posts: FC<IPosts> = () => {
                     <Post key={(item as IPost).id}>
                         <Title>Title: {(item as IPost).title}</Title>
                         <hr/>
-                        <Comments id={(item as IPost).id}/>
+                        <Comments comments={item.comments}/>
                         <CommentCreator id={(item as IPost).id} />
                     </Post>
                 )

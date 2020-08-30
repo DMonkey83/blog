@@ -1,30 +1,19 @@
-import React, {FC, useEffect, useState} from 'react'
-import {Container} from './CommentsStyles';
-import {getComments, getPosts} from "../../helpers/apiCalls";
+import React, {FC} from 'react'
+import {Container, Comment} from './CommentsStyles';
+import {IComment} from "../../../../typesInterfaces";
 
 interface IComments {
-    id: string;
+    comments: IComment[];
 }
 
-interface IComment {
-    id: string;
-    content: string;
-}
+const NOT_ALLOWED_WORD = 'orange'
 
-export const Comments: FC<IComments> = ({id}) => {
-    const [comments, setComments] = useState({})
-    useEffect(() => {
-        getCommentList()
-    }, [])
-    const getCommentList = async () => {
-        const data = await getComments(id);
-        setComments(data);
-    };
+export const Comments: FC<IComments> = ({comments}) => {
     return (
         <Container>
             {comments && Object.values(comments).map(item => {
                 return (
-                    <div>{(item as IComment).content}</div>
+                    <Comment hasFlag={item.content.includes(NOT_ALLOWED_WORD)}>{(item as IComment).content}</Comment>
                 )
             })}
         </Container>

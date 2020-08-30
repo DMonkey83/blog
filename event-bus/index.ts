@@ -1,11 +1,11 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+import * as bodyParser from 'body-parser';
 import axios from 'axios';
 
 const app = express();
 app.use(bodyParser.json());
 
-app.post('/event', (req, res) => {
+app.post('/events', (req, res) => {
     const event = req.body;
     axios.post('http://localhost:4000/events', event);
     axios.post('http://localhost:4001/events', event);
